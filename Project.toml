@@ -3,6 +3,9 @@ uuid = "5a1273f0-a906-4eb0-8178-7035f457d819"
 authors = ["Qi Zhang <singularitti@outlook.com>"]
 version = "0.1.0"
 
+[deps]
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+
 [compat]
 julia = "1"
 
