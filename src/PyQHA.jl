@@ -6,7 +6,7 @@ using PyCall: PyNULL, PyError, PyObject, PyAny, pyimport, pycall
 # Extending methods
 import PyCall
 
-export qha, version
+export qha
 
 const qha = PyNULL()
 
