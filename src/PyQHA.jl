@@ -47,4 +47,5 @@ macro pyinterface(T)
     end
 end
 
+include("Calculators.jl")
 end
