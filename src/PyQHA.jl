@@ -42,8 +42,6 @@ macro pyinterface(T)
         PyCall.hasproperty(f::$T, s::Symbol) = hasproperty(PyObject(f), s)
         Base.propertynames(f::$T) = propertynames(PyObject(f))
         Base.haskey(f::$T, x) = haskey(PyObject(f), x)
-        # Common methods
-        Base.close(f::$T) = PyObject(f).close()
     end
 end
 
