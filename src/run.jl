@@ -1,14 +1,21 @@
 import AbInitioSoftwareBase: load
 
+using .Settings: from_yaml
 using .Calculators: SingleCalculator, SamePhDOSCalculator, DifferentPhDOSCalculator
 
 export runcode
 
 function runcode(cfgfile)
-    raw_config = load(cfgfile)
-    config = Dict()
+    config = from_yaml(cfgfile)
 
-    
+    if !isdir(config["output_directory"])
+        mkpath(config["output_directory"])
+    end
+    config["qha_output"] = joinpath(config["output_directory"], "output.txt")
+    if isfile(config["qha_output"])
+        rm(config["qha_output"])
+    end
+    save_to_output(config["qha_output"], make_starting_string())
 
     str = lowercase(config["calculation"])
     if str == "single"
@@ -42,7 +49,7 @@ function runcode(cfgfile)
     p_sample_gpa = calculator.pressure_sample_array
 
     results_folder = config["output_directory"]
-    calculation_option = (
+    calculation_option = Dict(
         "F" => "f_tp",
         "G" => "g_tp",
         "H" => "h_tp",
@@ -93,10 +100,10 @@ function runcode(cfgfile)
         file_stv_j,
     )
 
-    for idx in calculator.settings["thermodynamic_properties"]
+    for idx in config["thermodynamic_properties"]
         if idx in ("F", "G", "H", "U")
-            attr_name = calculation_option[idx] + "_" + calculator.settings["energy_unit"]
-            file_name = attr_name + ".txt"
+            attr_name = calculation_option[idx] * "_" * config["energy_unit"]
+            file_name = attr_name * ".txt"
             file_dir = joinpath(results_folder, file_name)
             save_x_tp(
                 getproperty(calculator, attr_name),
@@ -106,11 +113,11 @@ function runcode(cfgfile)
                 file_dir,
             )
         elseif idx == "V"
-            v_bohr3 = calculation_option[idx] + "_" + "bohr3"
-            file_name_bohr3 = v_bohr3 + ".txt"
+            v_bohr3 = calculation_option[idx] * "_bohr3"
+            file_name_bohr3 = v_bohr3 * ".txt"
             file_dir_au = joinpath(results_folder, file_name_bohr3)
-            v_ang3 = calculation_option[idx] + "_" + "ang3"
-            file_name_ang3 = v_ang3 + ".txt"
+            v_ang3 = calculation_option[idx] * "_ang3"
+            file_name_ang3 = v_ang3 * ".txt"
             file_dir_ang3 = joinpath(results_folder, file_name_ang3)
             save_x_tp(
                 getproperty(calculator, v_bohr3),
@@ -128,7 +135,7 @@ function runcode(cfgfile)
             )
         elseif idx in ("Cv", "Cp", "Bt", "Btp", "Bs", "alpha", "gamma")
             attr_name = calculation_option[idx]
-            file_name = attr_name + ".txt"
+            file_name = attr_name * ".txt"
             file_dir = joinpath(results_folder, file_name)
             save_x_tp(
                 getproperty(calculator, attr_name),
