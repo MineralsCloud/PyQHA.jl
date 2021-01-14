@@ -48,7 +48,7 @@ function runcode(cfgfile)
     temperature_sample = calculator.temperature_sample_array
     p_sample_gpa = calculator.pressure_sample_array
 
-    results_folder = config["output_directory"]
+    results_folder = expanduser(config["output_directory"])
     calculation_option = Dict(
         "F" => "f_tp",
         "G" => "g_tp",
