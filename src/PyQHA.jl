@@ -6,12 +6,14 @@ using PyCall: PyNULL, PyError, PyObject, PyAny, pyimport, pycall
 # Extending methods
 import PyCall
 
-export qha
-
 const qha = PyNULL()
+const qha_calculator = PyNULL()
+const qha_basicio_out = PyNULL()
 
 function __init__()
     copy!(qha, pyimport("qha"))
+    copy!(qha_calculator, pyimport("qha.calculator"))
+    copy!(qha_basicio_out, pyimport("qha.basic_io.out"))
     # Code from https://github.com/JuliaPy/PyPlot.jl/blob/caf7f89/src/init.jl#L168-L173
     vers = qha.__version__
     global version = try
