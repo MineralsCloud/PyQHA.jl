@@ -11,6 +11,7 @@ const qha_calculator = PyNULL()
 const qha_basicio_out = PyNULL()
 const qha_settings = PyNULL()
 const qha_plotting = PyNULL()
+const qha_input_maker = PyNULL()
 
 function __init__()
     copy!(qha, pyimport("qha"))
@@ -18,6 +19,7 @@ function __init__()
     copy!(qha_basicio_out, pyimport("qha.basic_io.out"))
     copy!(qha_settings, pyimport("qha.settings"))
     copy!(qha_plotting, pyimport("qha.plotting"))
+    copy!(qha_input_maker, pyimport("qha.basic_io.input_maker"))
     # Code from https://github.com/JuliaPy/PyPlot.jl/blob/caf7f89/src/init.jl#L168-L173
     vers = qha.__version__
     global version = try
@@ -56,5 +58,6 @@ include("Calculators.jl")
 include("io.jl")
 include("run.jl")
 include("plot.jl")
+include("convert.jl")
 
 end
