@@ -10,12 +10,14 @@ const qha = PyNULL()
 const qha_calculator = PyNULL()
 const qha_basicio_out = PyNULL()
 const qha_settings = PyNULL()
+const qha_plotting = PyNULL()
 
 function __init__()
     copy!(qha, pyimport("qha"))
     copy!(qha_calculator, pyimport("qha.calculator"))
     copy!(qha_basicio_out, pyimport("qha.basic_io.out"))
     copy!(qha_settings, pyimport("qha.settings"))
+    copy!(qha_plotting, pyimport("qha.plotting"))
     # Code from https://github.com/JuliaPy/PyPlot.jl/blob/caf7f89/src/init.jl#L168-L173
     vers = qha.__version__
     global version = try
@@ -53,5 +55,6 @@ include("Settings.jl")
 include("Calculators.jl")
 include("io.jl")
 include("run.jl")
+include("plot.jl")
 
 end
