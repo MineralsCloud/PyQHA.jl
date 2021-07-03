@@ -1,10 +1,12 @@
 using PyQHA
 using Documenter
 
+DocMeta.setdocmeta!(PyQHA, :DocTestSetup, :(using PyQHA); recursive=true)
+
 makedocs(;
     modules=[PyQHA],
     authors="Qi Zhang <singularitti@outlook.com>",
-    repo="https://github.com/MineralsCloud/PyQHA.jl/blob/{commit}{path}#L{line}",
+    repo="https://github.com/MineralsCloud/PyQHA.jl/blob/{commit}{path}#{line}",
     sitename="PyQHA.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",

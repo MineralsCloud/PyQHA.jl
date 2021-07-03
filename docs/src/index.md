@@ -4,6 +4,8 @@ CurrentModule = PyQHA
 
 # PyQHA
 
+Documentation for [PyQHA](https://github.com/MineralsCloud/PyQHA.jl).
+
 ```@index
 ```
 
