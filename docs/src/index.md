@@ -7,6 +7,7 @@ CurrentModule = PyQHA
 Documentation for [PyQHA](https://github.com/MineralsCloud/PyQHA.jl).
 
 ```@index
+
 ```
 
 ```@autodocs
