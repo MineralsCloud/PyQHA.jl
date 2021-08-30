@@ -1,5 +1,3 @@
-import AbInitioSoftwareBase: load
-
 using .Settings: from_yaml
 using .Calculators: SingleCalculator, SamePhDOSCalculator, DifferentPhDOSCalculator
 

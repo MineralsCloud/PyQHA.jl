@@ -4,12 +4,10 @@ authors = ["Qi Zhang <singularitti@outlook.com>"]
 version = "0.1.0"
 
 [deps]
-AbInitioSoftwareBase = "df5135bc-470e-46c6-b451-292e27ca5b84"
 Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 
 [compat]
-AbInitioSoftwareBase = "0.2, 0.3"
 Conda = "1.5"
 PyCall = "1.18"
 julia = "1"
