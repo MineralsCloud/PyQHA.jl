@@ -13,10 +13,11 @@ const qha_settings = PyNULL()
 const qha_plotting = PyNULL()
 const qha_input_maker = PyNULL()
 
+@eval import Conda
+Conda.pip_interop(true)
+Conda.pip("install", "git+https://github.com/MineralsCloud/qha.git@v1.0.20")
+
 function __init__()
-    @eval import Conda
-    Conda.pip_interop(true)
-    Conda.pip("install", "git+https://github.com/MineralsCloud/qha.git@v1.0.20")
     copy!(qha, pyimport("qha"))
     copy!(qha_calculator, pyimport("qha.calculator"))
     copy!(qha_basicio_out, pyimport("qha.basic_io.out"))
