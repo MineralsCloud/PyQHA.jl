@@ -10,5 +10,5 @@ function converter(inp_file_list, inp_static, inp_q_points)
     conv.read_static()
     conv.read_q_points()
     conv.read_frequency_files()
-    conv.write_to_file()
+    return conv.write_to_file()
 end

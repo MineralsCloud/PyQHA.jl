@@ -22,12 +22,12 @@ function runcode(cfgfile)
     elseif str == "same phonon dos"
         calculator = SamePhDOSCalculator(config)
         println(
-            "You have multi-configuration calculation with the same phonon DOS assumed.",
+            "You have multi-configuration calculation with the same phonon DOS assumed."
         )
     elseif str == "different phonon dos"
         calculator = DifferentPhDOSCalculator(config)
         println(
-            "You have multi-configuration calculation with different phonon DOS assumed.",
+            "You have multi-configuration calculation with different phonon DOS assumed."
         )
     else
         error("""

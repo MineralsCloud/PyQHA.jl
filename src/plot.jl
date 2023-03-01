@@ -12,8 +12,9 @@ function plot(cfgfile)
 
     plotter = Plotter(config)
 
-    desired_pressures_gpa =
-        range(config["P_MIN"]; length = config["NTV"], step = config["DELTA_P"])
+    desired_pressures_gpa = range(
+        config["P_MIN"]; length=config["NTV"], step=config["DELTA_P"]
+    )
     config["DESIRED_PRESSURES_GPa"] = desired_pressures_gpa
 
     results_folder = expanduser(config["output_directory"])
