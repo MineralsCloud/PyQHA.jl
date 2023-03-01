@@ -1,28 +1,21 @@
 module Calculators
 
-using PyCall: PyObject
+using PythonCall: PythonCall
+using PythonCallHelpers: @pymutable
 
-using PyQHA: qha_calculator, @pyinterface
-using PyQHA.Settings: Config
+using ..PyQHA: qha_calculator
+using ..Settings: Config
 
 export SingleCalculator, SamePhDOSCalculator, DifferentPhDOSCalculator
 
 abstract type Calculator end
-mutable struct SingleCalculator <: Calculator
-    o::PyObject
-end
+@pymutable SingleCalculator Calculator
 SingleCalculator(config::Config) = SingleCalculator(qha_calculator.Calculator(config))
-mutable struct SamePhDOSCalculator <: Calculator
-    o::PyObject
-end
+@pymutable SamePhDOSCalculator Calculator
 SamePhDOSCalculator(config::Config) =
     SamePhDOSCalculator(qha_calculator.SamePhDOSCalculator(config))
-mutable struct DifferentPhDOSCalculator <: Calculator
-    o::PyObject
-end
+@pymutable DifferentPhDOSCalculator Calculator
 DifferentPhDOSCalculator(config::Config) =
     DifferentPhDOSCalculator(qha_calculator.DifferentPhDOSCalculator(config))
-
-@pyinterface Calculator
 
 end

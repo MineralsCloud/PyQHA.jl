@@ -1,13 +1,11 @@
 using .Settings: Config
 
+using PythonCallHelpers: @pymutable
+
 export plot
 
-mutable struct Plotter
-    o::PyObject
-end
+@pymutable Plotter
 Plotter(config::Config) = Plotter(qha_plotting.Plotter(config))
-
-@pyinterface Plotter
 
 function plot(cfgfile)
     config = from_yaml(cfgfile)

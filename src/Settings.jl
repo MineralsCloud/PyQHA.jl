@@ -1,20 +1,17 @@
 module Settings
 
-using PyCall: PyObject
+using PythonCall: PythonCall, Py
+using PythonCallHelpers: @pymutable
 
-using PyQHA: qha_settings, @pyinterface
+using ..PyQHA: qha_settings
 
 export from_yaml
 
-mutable struct Config
-    o::PyObject
-end
+@pymutable Config
 Config(args::AbstractDict...) = Config(qha_settings.Settings(args...))
 
-Base.getindex(config::Config, key) = PyObject(config).get(key)
-Base.setindex!(config::Config, value, key) = PyObject(config).__setitem__(key, value)
-
-@pyinterface Config
+Base.getindex(config::Config, key) = Py(config).get(key)
+Base.setindex!(config::Config, value, key) = Py(config).__setitem__(key, value)
 
 from_yaml(file) = Config(qha_settings.from_yaml(file))
 
