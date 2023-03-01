@@ -1,32 +1,24 @@
 module PyQHA
 
-__precompile__() # this module is safe to precompile
+using PythonCall: PythonCall, Py, pynew, pyimport, pyhasattr, pyconvert, pycall, pycopy!
 
-using PyCall: PyNULL, PyError, PyObject, PyAny, pyimport, pycall
-# Extending methods
-import PyCall
-
-const qha = PyNULL()
-const qha_calculator = PyNULL()
-const qha_basicio_out = PyNULL()
-const qha_settings = PyNULL()
-const qha_plotting = PyNULL()
-const qha_input_maker = PyNULL()
-
-@eval import Conda
-Conda.pip_interop(true)
-Conda.pip("install", "git+https://github.com/MineralsCloud/qha.git@v1.0.20")
+const qha = pynew()
+const qha_calculator = pynew()
+const qha_basicio_out = pynew()
+const qha_settings = pynew()
+const qha_plotting = pynew()
+const qha_input_maker = pynew()
 
 function __init__()
-    copy!(qha, pyimport("qha"))
-    copy!(qha_calculator, pyimport("qha.calculator"))
-    copy!(qha_basicio_out, pyimport("qha.basic_io.out"))
-    copy!(qha_settings, pyimport("qha.settings"))
-    copy!(qha_plotting, pyimport("qha.plotting"))
-    copy!(qha_input_maker, pyimport("qha.basic_io.input_maker"))
+    pycopy!(qha, pyimport("qha"))
+    pycopy!(qha_calculator, pyimport("qha.calculator"))
+    pycopy!(qha_basicio_out, pyimport("qha.basic_io.out"))
+    pycopy!(qha_settings, pyimport("qha.settings"))
+    pycopy!(qha_plotting, pyimport("qha.plotting"))
+    pycopy!(qha_input_maker, pyimport("qha.basic_io.input_maker"))
     # Code from https://github.com/JuliaPy/PyPlot.jl/blob/caf7f89/src/init.jl#L168-L173
     vers = qha.__version__
-    global version = try
+    return global version = try
         VersionNumber(vers)
     catch
         v"0.0.0" # fallback
