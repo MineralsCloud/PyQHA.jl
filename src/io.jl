@@ -1,3 +1,18 @@
+using CSV: File
+using DataFrames: DataFrame
+
+export read_f_tv, read_f_tp
+
+function read_f_tv(path)
+    file = File(path; delim=" ", header=1, ignorerepeated=true)
+    return DataFrame(file)
+end
+
+function read_f_tp(path)
+    file = File(path; delim=" ", header=1, ignorerepeated=true)
+    return DataFrame(file)
+end
+
 function save_x_tp(df, t, desired_pressures_gpa, p_sample_gpa, outfile_name)
     return qha_basicio_out.save_x_tp(
         df, t, desired_pressures_gpa, p_sample_gpa, outfile_name
