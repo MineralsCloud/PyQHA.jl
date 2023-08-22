@@ -31,5 +31,6 @@ include("io.jl")
 include("run.jl")
 include("plot.jl")
 include("convert.jl")
+include("recipes.jl")
 
 end
