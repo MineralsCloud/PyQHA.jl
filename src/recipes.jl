@@ -36,7 +36,6 @@ using RecipesBase: @recipe, @userplot, @series
         @series begin
             seriestype --> :scatter
             label := ""
-            # @show [volumes[index]], [free_energy[index]]
             [volumes[index]], [free_energy[index]]
         end
     end
