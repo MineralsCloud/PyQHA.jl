@@ -5,7 +5,10 @@ export read_f_tv, read_f_tp
 
 function read_f_tv(path)
     file = File(path; delim=" ", header=1, ignorerepeated=true)
-    return DataFrame(file)
+    df = DataFrame(file)
+    volumes = Volume(map(Base.Fix1(parse, Float64), names(df)[2:end]))
+    temperatures = Temperature(collect(df[:, 1]))
+    return DimArray(Matrix(df[:, 2:end]), (temperatures, volumes))
 end
 
 function read_f_tp(path)
