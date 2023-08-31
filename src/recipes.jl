@@ -1,7 +1,7 @@
 using RecipesBase: @recipe, @userplot, @series
 
-@userplot FreeEnergyTempVolPlot
-@recipe function f(plot::FreeEnergyTempVolPlot)
+@userplot TempVolPlot
+@recipe function f(plot::TempVolPlot)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
     path = first(plot.args)
     data = read_f_tv(path)
