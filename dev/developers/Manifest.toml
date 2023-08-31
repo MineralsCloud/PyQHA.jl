@@ -1,6 +1,6 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.2"
+julia_version = "1.9.3"
 manifest_format = "2.0"
 project_hash = "46b1e7374cb6027d503f25d8fba2a06b041867f6"
 
@@ -268,9 +268,9 @@ version = "1.4.2"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
-git-tree-sha1 = "9673d39decc5feece56ef3940e5dafba15ba0f81"
+git-tree-sha1 = "03b4c25b43cb84cee5c90aa9b5ea0a78fd848d2f"
 uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-version = "1.1.2"
+version = "1.2.0"
 
 [[deps.Preferences]]
 deps = ["TOML"]
@@ -290,7 +290,7 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[deps.PyQHA]]
 deps = ["CSV", "CondaPkg", "DataFrames", "PythonCall", "PythonCallHelpers", "RecipesBase"]
-git-tree-sha1 = "701efe06f4c6303020901446af4061fe66a031fc"
+git-tree-sha1 = "ac9de51ab46954f5bd6e5872d5ed1be39ed132a8"
 repo-rev = "main"
 repo-url = "https://github.com/MineralsCloud/PyQHA.jl"
 uuid = "5a1273f0-a906-4eb0-8178-7035f457d819"
