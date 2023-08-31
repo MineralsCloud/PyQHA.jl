@@ -9,34 +9,35 @@ using RecipesBase: @recipe, @userplot, @series
     r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
     temperatures = collect(rawdata[r, 1])
-    data = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
-    size --> (600, 400)
+    free_energies = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
+    size --> (800, 500)
     markersize --> 2
     markerstrokecolor --> :auto
     markerstrokewidth --> 0
     xlims --> extrema(volumes)
     xguide --> "volumes"
     yguide --> "free energy"
-    guidefontsize --> 10
-    tickfontsize --> 8
-    legendfontsize --> 8
+    guidefontsize --> 11
+    tickfontsize --> 9
+    legendfontsize --> 9
     legend_foreground_color --> nothing
     legend_position --> :top
     frame --> :box
+    margin --> (1.3, :mm)
     palette --> :tab20
     grid --> nothing
-    for (temperature, datum) in Iterators.reverse(zip(temperatures, data))
+    for (temperature, free_energy) in Iterators.reverse(zip(temperatures, free_energies))
         @series begin
             seriestype --> :path
             z_order --> :back
             label --> "T=" * string(temperature) * " K"
-            volumes, datum
+            volumes, free_energy
         end
-        index = argmin(datum)
+        index = argmin(free_energy)
         @series begin
             seriestype --> :scatter
             label := ""
-            [volumes[index]], [datum[index]]
+            [volumes[index]], [free_energy[index]]
         end
     end
 end
