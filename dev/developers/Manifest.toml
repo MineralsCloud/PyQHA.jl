@@ -290,7 +290,7 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[deps.PyQHA]]
 deps = ["CSV", "CondaPkg", "DataFrames", "PythonCall", "PythonCallHelpers", "RecipesBase"]
-git-tree-sha1 = "ac9de51ab46954f5bd6e5872d5ed1be39ed132a8"
+git-tree-sha1 = "5ce15b4a19bb50316b4a1b34fa047a733fff737f"
 repo-rev = "main"
 repo-url = "https://github.com/MineralsCloud/PyQHA.jl"
 uuid = "5a1273f0-a906-4eb0-8178-7035f457d819"
