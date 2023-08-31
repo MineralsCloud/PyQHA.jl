@@ -429,4 +429,5 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+.CondaPkg
 
