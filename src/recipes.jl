@@ -41,3 +41,38 @@ using RecipesBase: @recipe, @userplot, @series
         end
     end
 end
+
+@userplot TempPressPlot
+@recipe function f(plot::TempPressPlot)
+    # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
+    path = first(plot.args)
+    rawdata = read_f_tp(path)
+    pressures = map(Base.Fix1(parse, Float64), names(rawdata)[2:end])
+    r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(rawdata, 1), length=5)
+    r = convert(StepRange{Int64,Int64}, r)
+    temperatures = collect(rawdata[r, 1])
+    data = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
+    size --> (800, 500)
+    markersize --> 2
+    markerstrokecolor --> :auto
+    markerstrokewidth --> 0
+    xlims --> extrema(pressures)
+    xguide --> "pressures"
+    guidefontsize --> 11
+    tickfontsize --> 9
+    legendfontsize --> 9
+    legend_foreground_color --> nothing
+    legend_position --> :top
+    frame --> :box
+    margin --> (1.3, :mm)
+    palette --> :tab20
+    grid --> nothing
+    for (temperature, datum) in Iterators.reverse(zip(temperatures, data))
+        @series begin
+            seriestype --> :path
+            z_order --> :back
+            label --> "T=" * string(temperature) * " K"
+            pressures, datum
+        end
+    end
+end
