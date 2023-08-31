@@ -4,12 +4,12 @@ using RecipesBase: @recipe, @userplot, @series
 @recipe function f(plot::TempVolPlot)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
     path = first(plot.args)
-    data = read_f_tv(path)
-    volumes = map(Base.Fix1(parse, Float64), names(data)[2:end])
-    r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(data, 1), length=5)
+    rawdata = read_f_tv(path)
+    volumes = map(Base.Fix1(parse, Float64), names(rawdata)[2:end])
+    r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
-    temperatures = collect(data[r, 1])
-    free_energies = collect(collect(values(row)) for row in eachrow(data[r, 2:end]))
+    temperatures = collect(rawdata[r, 1])
+    data = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
     size --> (600, 400)
     markersize --> 2
     markerstrokecolor --> :auto
@@ -25,18 +25,18 @@ using RecipesBase: @recipe, @userplot, @series
     frame --> :box
     palette --> :tab20
     grid --> nothing
-    for (temperature, free_energy) in Iterators.reverse(zip(temperatures, free_energies))
+    for (temperature, datum) in Iterators.reverse(zip(temperatures, data))
         @series begin
             seriestype --> :path
             z_order --> :back
             label --> "T=" * string(temperature) * " K"
-            volumes, free_energy
+            volumes, datum
         end
-        index = argmin(free_energy)
+        index = argmin(datum)
         @series begin
             seriestype --> :scatter
             label := ""
-            [volumes[index]], [free_energy[index]]
+            [volumes[index]], [datum[index]]
         end
     end
 end
