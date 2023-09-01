@@ -1,6 +1,6 @@
 using DimensionalData: DimensionalData, Dimensions, DimArray, @dim
 
-export FreeEnergy
+export Temperature, Volume, Pressure, FreeEnergy
 
 @dim Temperature "Temperature"
 @dim Volume "Volume"
