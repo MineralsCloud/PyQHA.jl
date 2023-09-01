@@ -25,6 +25,7 @@ function __init__()
     end
 end
 
+include("data.jl")
 include("Settings.jl")
 include("Calculators.jl")
 include("io.jl")

@@ -1,16 +1,22 @@
 using CSV: File
-using DataFrames: DataFrame
+using Tables: matrix
 
 export read_f_tv, read_f_tp
 
 function read_f_tv(path)
-    file = File(path; delim=" ", header=1, ignorerepeated=true)
-    return DataFrame(file)
+    file = File(path; delim=" ", header=false, ignorerepeated=true)
+    rawdata = matrix(file)
+    volumes = Volume(rawdata[1, 2:end])
+    temperatures = Temperature(map(Base.Fix1(parse, Float64), rawdata[2:end, 1]))
+    return DimArray(rawdata[2:end, 2:end], (temperatures, volumes))
 end
 
 function read_f_tp(path)
-    file = File(path; delim=" ", header=1, ignorerepeated=true)
-    return DataFrame(file)
+    file = File(path; delim=" ", header=false, ignorerepeated=true)
+    rawdata = matrix(file)
+    pressures = Pressure(rawdata[1, 2:end])
+    temperatures = Temperature(map(Base.Fix1(parse, Float64), rawdata[2:end, 1]))
+    return DimArray(rawdata[2:end, 2:end], (temperatures, pressures))
 end
 
 function save_x_tp(df, t, desired_pressures_gpa, p_sample_gpa, outfile_name)
