@@ -6,7 +6,6 @@ version = "0.1.2-DEV"
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
 PythonCallHelpers = "82926614-86f1-43a3-92dc-771be2bbc0fa"
