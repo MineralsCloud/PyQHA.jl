@@ -13,7 +13,10 @@ end
 
 function read_f_tp(path)
     file = File(path; delim=" ", header=1, ignorerepeated=true)
-    return DataFrame(file)
+    df = DataFrame(file)
+    pressures = Pressure(map(Base.Fix1(parse, Float64), names(df)[2:end]))
+    temperatures = Temperature(collect(df[:, 1]))
+    return DimArray(Matrix(df[:, 2:end]), (temperatures, pressures))
 end
 
 function save_x_tp(df, t, desired_pressures_gpa, p_sample_gpa, outfile_name)
