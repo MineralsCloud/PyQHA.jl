@@ -7,7 +7,7 @@ function read_f_tv(path)
     iterable = File(path; delim=" ", header=1, ignorerepeated=true)
     header = columnnames(iterable)  # Only read header
     iterator = Iterators.Stateful(iterable)
-    volumes = Pressure(map(Base.Fix1(parse, Float64) ∘ string, header[2:end]))
+    volumes = Volume(map(Base.Fix1(parse, Float64) ∘ string, header[2:end]))
     temperatures, data = Float64[], Vector{Float64}[]
     for row in iterator
         temperature, datum... = [only(getcolumn(row, col)) for col in header]
