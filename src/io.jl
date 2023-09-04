@@ -1,22 +1,36 @@
 using CSV: File
-using Tables: matrix
+using Tables: getcolumn, columnnames
 
 export read_f_tv, read_f_tp
 
 function read_f_tv(path)
-    file = File(path; delim=" ", header=false, ignorerepeated=true)
-    rawdata = matrix(file)
-    volumes = Volume(rawdata[1, 2:end])
-    temperatures = Temperature(map(Base.Fix1(parse, Float64), rawdata[2:end, 1]))
-    return DimArray(rawdata[2:end, 2:end], (temperatures, volumes))
+    iterable = File(path; delim=" ", header=1, ignorerepeated=true)
+    header = columnnames(iterable)  # Only read header
+    iterator = Iterators.Stateful(iterable)
+    volumes = Pressure(map(Base.Fix1(parse, Float64) ∘ string, header[2:end]))
+    temperatures, data = Float64[], Vector{Float64}[]
+    for row in iterator
+        temperature, datum... = [only(getcolumn(row, col)) for col in header]
+        push!(temperatures, temperature)
+        push!(data, datum)
+    end
+    temperatures = Temperature(temperatures)
+    return DimArray(reduce(hcat, data)', (temperatures, volumes))
 end
 
 function read_f_tp(path)
-    file = File(path; delim=" ", header=false, ignorerepeated=true)
-    rawdata = matrix(file)
-    pressures = Pressure(rawdata[1, 2:end])
-    temperatures = Temperature(map(Base.Fix1(parse, Float64), rawdata[2:end, 1]))
-    return DimArray(rawdata[2:end, 2:end], (temperatures, pressures))
+    iterable = File(path; delim=" ", header=1, ignorerepeated=true)
+    header = columnnames(iterable)  # Only read header
+    iterator = Iterators.Stateful(iterable)
+    pressures = Pressure(map(Base.Fix1(parse, Float64) ∘ string, header[2:end]))
+    temperatures, data = Float64[], Vector{Float64}[]
+    for row in iterator
+        temperature, datum... = [only(getcolumn(row, col)) for col in header]
+        push!(temperatures, temperature)
+        push!(data, datum)
+    end
+    temperatures = Temperature(temperatures)
+    return DimArray(reduce(hcat, data)', (temperatures, pressures))
 end
 
 function save_x_tp(df, t, desired_pressures_gpa, p_sample_gpa, outfile_name)
