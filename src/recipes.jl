@@ -22,17 +22,18 @@ using RecipesBase: @recipe, @userplot, @series
     legend_position --> :top
     frame --> :box
     margin --> (1.3, :mm)
-    palette --> :tab20
     grid --> nothing
     for (temperature, free_energy) in Iterators.reverse(zip(temperatures, free_energies))  # To plot temperature from low to high
         @series begin
+            primary := true  # Main series
             seriestype --> :path
             z_order --> :back
             label --> "T=" * string(temperature) * " K"
             volumes, free_energy
         end
-        index = argmin(free_energy)
+        index = argmin(free_energy)  # The lowest free energy
         @series begin
+            primary := false  # See https://discourse.julialang.org/t/what-does-the-primary-attribute-do-and-how-to-plot-curves-with-scatters-added-onto-it-in-plots-jl/93486/2
             seriestype --> :scatter
             label := ""
             [volumes[index]], [free_energy[index]]
