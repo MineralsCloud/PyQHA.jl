@@ -13,7 +13,7 @@ using RecipesBase: @recipe, @userplot, @series
     markerstrokecolor --> :auto
     markerstrokewidth --> 0
     xlims --> extrema(volumes)
-    xguide --> "volumes"
+    xguide --> "volume"
     yguide --> "free energy"
     guidefontsize --> 11
     tickfontsize --> 9
@@ -28,14 +28,14 @@ using RecipesBase: @recipe, @userplot, @series
             primary := true  # Main series
             seriestype --> :path
             z_order --> :back
-            label --> "T=" * string(temperature) * " K"
+            label --> raw"$T=" * string(temperature) * raw"\,$K"
             volumes, free_energy
         end
         index = argmin(free_energy)  # The lowest free energy
         @series begin
             primary := false  # See https://discourse.julialang.org/t/what-does-the-primary-attribute-do-and-how-to-plot-curves-with-scatters-added-onto-it-in-plots-jl/93486/2
             seriestype --> :scatter
-            label := ""
+            label --> ""
             [volumes[index]], [free_energy[index]]
         end
     end
