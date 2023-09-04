@@ -1,9 +1,13 @@
+using DimensionalData: dimnum
 using RecipesBase: @recipe, @userplot, @series
 
 @userplot TempVolPlot
 @recipe function f(plot::TempVolPlot)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
     rawdata = first(plot.args)
+    if dimnum(rawdata, (Volume, Temperature)) == (1, 2)
+        rawdata = transpose(rawdata)
+    end
     temperatures, volumes = axes(rawdata)
     r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
@@ -45,6 +49,9 @@ end
 @recipe function f(plot::PressTempPlot; reverse=false)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
     rawdata = first(plot.args)
+    if dimnum(rawdata, (Temperature, Pressure)) == (1, 2)
+        rawdata = transpose(rawdata)
+    end
     pressures, temperatures = axes(rawdata)
     r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
