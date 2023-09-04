@@ -9,7 +9,7 @@ using RecipesBase: @recipe, @userplot, @series
         rawdata = transpose(rawdata)
     end
     temperatures, volumes = dims(rawdata)
-    r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
+    r = length(plot.args) == 2 ? last(plot.args) : 1:1:5
     r = convert(StepRange{Int64,Int64}, r)
     free_energies = eachrow(rawdata[r, :])  # At each temperature, the free energy is a function of volume.
     size --> (800, 500)
@@ -53,7 +53,7 @@ end
         rawdata = transpose(rawdata)
     end
     pressures, temperatures = dims(rawdata)
-    r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
+    r = length(plot.args) == 2 ? last(plot.args) : 1:1:5
     r = convert(StepRange{Int64,Int64}, r)  # Select pressures
     data = eachrow(rawdata[r, :])  # At each pressure, the data is a function of temperature.
     size --> (800, 500)
