@@ -41,37 +41,34 @@ using RecipesBase: @recipe, @userplot, @series
     end
 end
 
-@userplot TempPressPlot
-@recipe function f(plot::TempPressPlot)
+@userplot PressTempPlot
+@recipe function f(plot::PressTempPlot; reverse=false)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
-    path = first(plot.args)
-    rawdata = read_f_tp(path)
-    pressures = map(Base.Fix1(parse, Float64), names(rawdata)[2:end])
-    r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(rawdata, 1), length=5)
+    rawdata = first(plot.args)
+    pressures, temperatures = axes(rawdata)
+    r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
-    temperatures = collect(rawdata[r, 1])
-    data = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
+    data = eachrow(rawdata[r, :])  # At each pressure, the data is a function of temperature.
     size --> (800, 500)
     markersize --> 2
     markerstrokecolor --> :auto
     markerstrokewidth --> 0
-    xlims --> extrema(pressures)
-    xguide --> "pressures"
+    xlims --> extrema(temperatures)
+    xguide --> "volume"
     guidefontsize --> 11
     tickfontsize --> 9
     legendfontsize --> 9
     legend_foreground_color --> nothing
-    legend_position --> :top
+    legend_position --> :bottom
     frame --> :box
     margin --> (1.3, :mm)
-    palette --> :tab20
     grid --> nothing
-    for (temperature, datum) in Iterators.reverse(zip(temperatures, data))
+    plot_in_order = reverse ? Iterators.reverse : identity
+    for (pressure, datum) in plot_in_order(zip(pressures, data))
         @series begin
             seriestype --> :path
-            z_order --> :back
-            label --> "T=" * string(temperature) * " K"
-            pressures, datum
+            label --> raw"$P=" * string(pressure) * raw"\,$GPa"
+            temperatures, datum
         end
     end
 end
