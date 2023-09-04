@@ -54,7 +54,7 @@ end
     markerstrokecolor --> :auto
     markerstrokewidth --> 0
     xlims --> extrema(temperatures)
-    xguide --> "volume"
+    xguide --> "temperature"
     guidefontsize --> 11
     tickfontsize --> 9
     legendfontsize --> 9
