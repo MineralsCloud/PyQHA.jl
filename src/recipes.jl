@@ -3,13 +3,11 @@ using RecipesBase: @recipe, @userplot, @series
 @userplot TempVolPlot
 @recipe function f(plot::TempVolPlot)
     # See http://juliaplots.org/RecipesBase.jl/stable/types/#User-Recipes-2
-    path = first(plot.args)
-    rawdata = read_f_tv(path)
-    volumes = map(Base.Fix1(parse, Float64), names(rawdata)[2:end])
-    r = length(plot.args) == 2 ? plot.args[end] : range(1; stop=size(rawdata, 1), length=5)
+    rawdata = first(plot.args)
+    temperatures, volumes = axes(rawdata)
+    r = length(plot.args) == 2 ? last(plot.args) : range(1; stop=size(rawdata, 1), length=5)
     r = convert(StepRange{Int64,Int64}, r)
-    temperatures = collect(rawdata[r, 1])
-    free_energies = (collect(values(row)) for row in eachrow(rawdata[r, 2:end]))
+    free_energies = eachrow(rawdata[r, :])  # At each temperature, the free energy is a function of volume.
     size --> (800, 500)
     markersize --> 2
     markerstrokecolor --> :auto
@@ -26,7 +24,7 @@ using RecipesBase: @recipe, @userplot, @series
     margin --> (1.3, :mm)
     palette --> :tab20
     grid --> nothing
-    for (temperature, free_energy) in Iterators.reverse(zip(temperatures, free_energies))
+    for (temperature, free_energy) in Iterators.reverse(zip(temperatures, free_energies))  # To plot temperature from low to high
         @series begin
             seriestype --> :path
             z_order --> :back
