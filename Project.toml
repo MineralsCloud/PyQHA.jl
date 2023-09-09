@@ -5,6 +5,7 @@ version = "0.1.2-DEV"
 
 [deps]
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
+PyQHACompat = "a2eda4bc-81c3-46d9-a891-e2ae62365657"
 PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
 PythonCallHelpers = "82926614-86f1-43a3-92dc-771be2bbc0fa"
 
